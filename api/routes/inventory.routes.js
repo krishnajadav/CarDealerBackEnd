@@ -12,4 +12,5 @@ module.exports = function(app) {
     app.get("/api/inventory/get", controller.get);
     app.put("/api/inventory/update/:id", controller.update);
     app.delete("/api/inventory/delete/:id", controller.delete);
+    app.get("/api/inventory/get/:seatCount/:quoteType", controller.getFilteredResults);
 };
