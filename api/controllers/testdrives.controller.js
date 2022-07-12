@@ -63,18 +63,17 @@ exports.bookAppointment = (req, res) => {
             res.status(500).send({message: err});
             return;
         }
-     
+        
         //check appointment isn't already booked
         if (appointment.length) {
-            res.status(500).send({message: "Appointment is already taken"});
+            res.status(409).send({message: "Appointment is already taken"});
             return;
         }
 
         //add userId and save appointment
         details.userId = req.params.userid;
         const drive = new TestDrives(details);
- 
-        drive.save((err, drive) => {
+         drive.save((err, drive) => {
             if (err) {
                 res.status(500).send({message: err});
                 return;
