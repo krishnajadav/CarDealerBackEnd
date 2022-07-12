@@ -3,4 +3,7 @@ mongoose.Promise = global.Promise;
 const db = {};
 db.mongoose = mongoose;
 db.user = require("./user.model");
+db.testDrives = require("./testDrives/testdrives.model");
+db.testDriveCars = require("./testDrives/testdrivecars.model");
+db.testDriveTimes = require("./testDrives/testdrivetimes.model");
 module.exports = db;
