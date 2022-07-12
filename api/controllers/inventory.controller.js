@@ -7,6 +7,9 @@ exports.add = (req, res) => {
         vehicleModelNumber: req.body.vehicleModelNumber,
         companyName: req.body.companyName,
         vehiclePrice: req.body.vehiclePrice,
+        eligibleForLoan: req.body.eligibleForLoan,
+        eligibleForRent: req.body.eligibleForRent, 
+        vehicleSeatCount: req.body.vehicleSeatCount
     });
     inventory.save((err, inventory) => {
         if (err) {
@@ -19,6 +22,34 @@ exports.add = (req, res) => {
 
 exports.get = (req, res) => {
     Inventory.find({}, {})
+        .exec((err, inventories) => {
+            if (err) {
+                res.status(500).send({message: err});
+                return;
+            }
+            res.status(200).send(inventories);
+        });
+};
+
+exports.getFilteredResults = (req, res) => {
+    let seatCount = req.params.seatCount;
+    let quoteType = req.params.quoteType;
+    let query = {};
+    if (quoteType === 'rent'){
+        query = {
+            vehicleSeatCount : seatCount,
+            eligibleForRent : true
+            }
+    }
+    else if(quoteType === 'loan'){
+        query={
+        eligibleForLoan : true
+        }
+    }
+    else{
+        return res.status(400).send("Invalid quote type");
+    }
+    Inventory.find(query, {})
         .exec((err, inventories) => {
             if (err) {
                 res.status(500).send({message: err});
@@ -44,6 +75,9 @@ exports.update = (req, res) => {
             inventory.vehicleModelNumber=req.body.vehicleModelNumber;
             inventory.companyName=req.body.companyName;
             inventory.vehiclePrice=req.body.vehiclePrice;
+            inventory.eligibleForLoan=req.body.eligibleForLoan;
+            inventory.eligibleForRent=req.body.eligibleForRent; 
+            inventory.vehicleSeatCount=req.body.vehicleSeatCount;
             inventory.save((err, inventory) => {
                 if (err) {
                     res.status(500).send({message: err});
