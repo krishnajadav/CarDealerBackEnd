@@ -32,6 +32,6 @@ db.mongoose
     });
 require('./api/routes/user.routes')(app);
 require('./api/routes/testdrives.routes')(app);
-
+require('./api/routes/inventory.routes')(app);
 
 module.exports = app;
