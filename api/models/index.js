@@ -7,4 +7,5 @@ db.testDrives = require("./testDrives/testdrives.model");
 db.testDriveCars = require("./testDrives/testdrivecars.model");
 db.testDriveTimes = require("./testDrives/testdrivetimes.model");
 db.inventory = require("./inventory.model");
+db.accessory = require("./accessory.model");
 module.exports = db;
