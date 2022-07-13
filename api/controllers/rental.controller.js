@@ -28,22 +28,22 @@ exports.getBetterDeals = async (req, res) => {
 
         let currentDate = new Date();
         const diffTime = Math.abs(nextDay - currentDate);
-        let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        if (diffDays <=7){
-            diffDays = 7;
+        let diffbetweenDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        if (diffbetweenDays <=7){
+            diffbetweenDays = 7;
         }
-        else if (diffDays <=14){
-            diffDays = 14;
+        else if (diffbetweenDays <=14){
+            diffbetweenDays = 14;
         }
-        else if( diffDays <=21){
-            diffDays = 21;
+        else if( diffbetweenDays <=21){
+            diffbetweenDays = 21;
         }
         else{
-            diffDays = 28;
+            diffbetweenDays = 28;
         }
         let rentalrate = await RentalRate.findOne({ day : nextDay.getDay() })
         
-        let rentalfactor = await RentalFactor.findOne({daysAway: diffDays});
+        let rentalfactor = await RentalFactor.findOne({daysAway: diffbetweenDays});
         for (var j =0 ;j <cars.length;j++){
             
             cost = (cars[j].vehiclePrice*rentalfactor.factor*distance*diffbetweenStartAndEndDate*rentalrate.rate).toFixed(2);
@@ -57,38 +57,32 @@ exports.getBetterDeals = async (req, res) => {
         }
     }
 
-    console.log(allCarDeals.length);
     return res.status(200).send(allCarDeals);
 };
 
 exports.getRentFactor = (req, res) => {
     let startDate = req.params.startDate;
     let currentDate = new Date();
-    console.log(startDate)
     const sDate = new Date(startDate);
     const diffTime = Math.abs(sDate - currentDate);
-    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-    console.log(diffTime + " milliseconds");
-    console.log(diffDays + " days");
+    let diffbetweenDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
 
-    if (diffDays <=7){
-        diffDays = 7;
+    if (diffbetweenDays <=7){
+        diffbetweenDays = 7;
     }
-    else if (diffDays <=14){
-        diffDays = 14;
+    else if (diffbetweenDays <=14){
+        diffbetweenDays = 14;
     }
-    else if( diffDays <=21){
-        diffDays = 21;
+    else if( diffbetweenDays <=21){
+        diffbetweenDays = 21;
     }
     else{
-        diffDays = 28;
+        diffbetweenDays = 28;
     }
-    // let diffDays = req.params.startDate;
     let query = {};
     query = {
-        daysAway : diffDays
+        daysAway : diffbetweenDays
         }
-        console.log(query)
         RentalFactor.findOne(query, {})
         .exec((err, rentfactors) => {
             if (err) {
@@ -106,7 +100,6 @@ exports.getRentRate = (req, res) => {
     query = {
         day : startDay.toString()
         }
-        console.log(query)
         RentalRate.findOne(query, {})
         .exec((err, rentalrates) => {
             if (err) {
