@@ -7,6 +7,10 @@ exports.add = (req, res) => {
         vehicleModelNumber: req.body.vehicleModelNumber,
         companyName: req.body.companyName,
         vehiclePrice: req.body.vehiclePrice,
+        vehicleImageURL:req.body.vehicleImageURL,
+        eligibleForLoan: true,
+        eligibleForRent: true,
+        vehicleSeatCount: req.body.vehicleSeatCount
     });
     inventory.save((err, inventory) => {
         if (err) {
@@ -44,6 +48,8 @@ exports.update = (req, res) => {
             inventory.vehicleModelNumber=req.body.vehicleModelNumber;
             inventory.companyName=req.body.companyName;
             inventory.vehiclePrice=req.body.vehiclePrice;
+            inventory.vehicleImageURL=req.body.vehicleImageURL;
+            inventory.vehicleSeatCount=req.body.vehicleSeatCount;
             inventory.save((err, inventory) => {
                 if (err) {
                     res.status(500).send({message: err});
