@@ -7,4 +7,6 @@ db.testDrives = require("./testDrives/testdrives.model");
 db.testDriveCars = require("./testDrives/testdrivecars.model");
 db.testDriveTimes = require("./testDrives/testdrivetimes.model");
 db.inventory = require("./inventory.model");
+db.rentalrate = require("./rentals/rentalrate.model");
+db.rentalfactor = require("./rentals/rentalfactor.model");
 module.exports = db;
