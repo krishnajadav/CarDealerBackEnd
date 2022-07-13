@@ -32,6 +32,34 @@ exports.get = (req, res) => {
         });
 };
 
+exports.getFilteredResults = (req, res) => {
+    let seatCount = req.params.seatCount;
+    let quoteType = req.params.quoteType;
+    let query = {};
+    if (quoteType === 'rent'){
+        query = {
+            vehicleSeatCount : seatCount,
+            eligibleForRent : true
+            }
+    }
+    else if(quoteType === 'loan'){
+        query={
+        eligibleForLoan : true
+        }
+    }
+    else{
+        return res.status(400).send("Invalid quote type");
+    }
+    Inventory.find(query, {})
+        .exec((err, inventories) => {
+            if (err) {
+                res.status(500).send({message: err});
+                return;
+            }
+            res.status(200).send(inventories);
+        });
+};
+
 exports.update = (req, res) => {
     Inventory.findOne({
         "_id": req.params.id
