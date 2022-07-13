@@ -7,8 +7,9 @@ exports.add = (req, res) => {
         vehicleModelNumber: req.body.vehicleModelNumber,
         companyName: req.body.companyName,
         vehiclePrice: req.body.vehiclePrice,
-        eligibleForLoan: req.body.eligibleForLoan,
-        eligibleForRent: req.body.eligibleForRent, 
+        vehicleImageURL:req.body.vehicleImageURL,
+        eligibleForLoan: true,
+        eligibleForRent: true,
         vehicleSeatCount: req.body.vehicleSeatCount
     });
     inventory.save((err, inventory) => {
@@ -75,8 +76,7 @@ exports.update = (req, res) => {
             inventory.vehicleModelNumber=req.body.vehicleModelNumber;
             inventory.companyName=req.body.companyName;
             inventory.vehiclePrice=req.body.vehiclePrice;
-            inventory.eligibleForLoan=req.body.eligibleForLoan;
-            inventory.eligibleForRent=req.body.eligibleForRent; 
+            inventory.vehicleImageURL=req.body.vehicleImageURL;
             inventory.vehicleSeatCount=req.body.vehicleSeatCount;
             inventory.save((err, inventory) => {
                 if (err) {

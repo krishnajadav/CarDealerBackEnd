@@ -5,12 +5,11 @@ const Inventory = mongoose.model(
         vehicleName:String,
         vehicleModelNumber:String,
         companyName: String,
-        vehiclePrice: Number,
-        eligibleForLoan: Boolean,
-        eligibleForRent: Boolean, 
-        vehicleSeatCount: Number,
-        vehicleRating: Number, // dealer inventory can ignore this field for now
-        vehicleImageURL: String
+        vehiclePrice: String,
+        vehicleImageURL:String,
+        eligibleForLoan:Boolean,
+        eligibleForRent: Boolean,
+        vehicleSeatCount: String
     })
 );
 module.exports = Inventory;
