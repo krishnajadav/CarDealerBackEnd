@@ -5,7 +5,12 @@ const Inventory = mongoose.model(
         vehicleName:String,
         vehicleModelNumber:String,
         companyName: String,
-        vehiclePrice: String
+        vehiclePrice: String,
+        vehicleImageURL:String,
+        eligibleForLoan:Boolean,
+        eligibleForRent: Boolean,
+        vehicleSeatCount: String,
+        vehicleRating: Number
     })
 );
 module.exports = Inventory;
