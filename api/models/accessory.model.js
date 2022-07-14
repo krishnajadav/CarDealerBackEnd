@@ -1,3 +1,4 @@
+// Author: Tuan Hamid
 const mongoose = require("mongoose");
 const Accessory = mongoose.model(
     "Accessory",
