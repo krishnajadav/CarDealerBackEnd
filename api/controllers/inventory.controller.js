@@ -32,7 +32,8 @@ exports.get = (req, res) => {
         });
 };
 
-exports.getFilteredResults = (req, res) => {
+// this method returns cars eligible for rent. Author: Elizabeth James
+exports.getFilteredResultsForRent = (req, res) => {
     let seatCount = req.params.seatCount;
     let quoteType = req.params.quoteType;
     let query = {};
@@ -42,10 +43,28 @@ exports.getFilteredResults = (req, res) => {
             eligibleForRent : true
             }
     }
-    else if(quoteType === 'loan'){
-        query={
-        eligibleForLoan : true
-        }
+    
+    else{
+        return res.status(400).send("Invalid quote type");
+    }
+    Inventory.find(query, {})
+        .exec((err, inventories) => {
+            if (err) {
+                res.status(500).send({message: err});
+                return;
+            }
+            res.status(200).send(inventories);
+        });
+};
+
+// this method returns cars eligible for loan. Author: Elizabeth James
+exports.getFilteredResultsForLoan = (req, res) => {    
+    let quoteType = req.params.quoteType;
+    let query = {};
+    if (quoteType === 'loan'){
+        query = {
+            eligibleForLoan : true
+            }
     }
     else{
         return res.status(400).send("Invalid quote type");
