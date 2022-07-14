@@ -1,3 +1,4 @@
+// Author: Tuan Hamid
 // https://www.bezkoder.com/node-js-mongodb-auth-jwt/
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
@@ -27,7 +28,7 @@ checkUserDuplicate = (req, res, next) => {
             return;
         }
         if (user) {
-            res.status(400).send({ message: "User already exists!" });
+            res.status(409).send({ message: "User already exists!" });
             return;
         }
         next();

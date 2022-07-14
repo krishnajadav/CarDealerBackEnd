@@ -1,3 +1,4 @@
+// Author: Tuan Hamid
 const controller = require("../controllers/user.controller");
 const { authorization } = require("../middlewares");
 

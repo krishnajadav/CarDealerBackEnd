@@ -1,3 +1,4 @@
+// Author: Tuan Hamid
 const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
@@ -5,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require('nodemailer');
 
+// register function references https://www.bezkoder.com/node-js-mongodb-auth-jwt/
 exports.register = (req, res) => {
     const user = new User({
         username: req.body.username,
@@ -20,10 +22,10 @@ exports.register = (req, res) => {
             return;
         }
         res.status(201).send({message: 'User created'});
-
     });
 };
 
+// login function references https://www.bezkoder.com/node-js-mongodb-auth-jwt/
 exports.login = (req, res) => {
     User.findOne({
         username: req.body.username
@@ -34,7 +36,7 @@ exports.login = (req, res) => {
                 return;
             }
             if (!user) {
-                return res.status(404).send({message: "User Not found."});
+                return res.status(404).send({message: "User not found"});
             }
             let isPasswordValid = bcrypt.compareSync(
                 req.body.password,
@@ -73,7 +75,7 @@ exports.updatePassword = (req, res) => {
                 return;
             }
             if (!user) {
-                return res.status(404).send({message: "User Not found."});
+                return res.status(404).send({message: "User not found"});
             }
             user.password = bcrypt.hashSync(req.body.password, 8);
             user.save((err, user) => {
@@ -82,7 +84,6 @@ exports.updatePassword = (req, res) => {
                     return;
                 }
                 res.status(200).send({message: 'Password updated'});
-
             });
         });
 };
@@ -97,7 +98,6 @@ exports.findAllEmployees = (req, res) => {
                 return;
             }
             res.status(200).send(users);
-
         });
 };
 
@@ -111,7 +111,7 @@ exports.updateStatus = (req, res) => {
                 return;
             }
             if (!user) {
-                return res.status(404).send({message: "User Not found."});
+                return res.status(404).send({message: "User not found"});
             }
             user.isEnabled = req.body.isEnabled;
             user.save((err, user) => {
@@ -145,9 +145,9 @@ exports.resetPasswordByEmail = (req, res) => {
                 return;
             }
             if (!user) {
-                return res.status(404).send({message: "User Not found."});
+                return res.status(404).send({message: "User not found"});
             }
-            // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+            // newPassword creation references https://stackoverflow.com/a/8084248
             let newPassword = (Math.random() + 1).toString(36).substring(7);
 
             user.password = bcrypt.hashSync(newPassword, 8);
@@ -156,13 +156,14 @@ exports.resetPasswordByEmail = (req, res) => {
                     res.status(500).send({message: err});
                     return;
                 }
+                // nodemailer referenced from https://medium.com/coox-tech/send-mail-using-node-js-express-js-with-nodemailer-93f4d62c83ee
                 const mailData = {
-                    from: 'tn220771@dal.ca',  // sender address
-                    to: user.username,   // list of receivers
+                    from: 'tn220771@dal.ca',
+                    to: user.username,
                     subject: 'New Password',
                     text: 'Your new password is ' + newPassword
                 };
-                transporter.sendMail(mailData, function (err, info) {
+                transporter.sendMail(mailData, function (err, data) {
                     if(err)
                         console.log(err)
                     else

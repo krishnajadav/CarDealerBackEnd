@@ -23,12 +23,12 @@ db.mongoose
         useUnifiedTopology: true
     })
     .then(() => {
-        console.log("Successfully connect to MongoDB.");
+        console.log("DB connection made");
     })
     .catch(err => {
-        console.error("Connection error", err);
-        process.exit();
+        console.log("DB Connection error", err);
     });
+
 require('./api/routes/user.routes')(app);
 require('./api/routes/testdrives.routes')(app);
 require('./api/routes/inventory.routes')(app);
