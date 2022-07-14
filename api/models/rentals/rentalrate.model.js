@@ -1,5 +1,5 @@
 //Author: Elizabeth James
-//Controller for the rentals feature
+//Model for the rentals feature
 const mongoose = require("mongoose");
 const Rentalrate = mongoose.model(
     "rentalrates",
