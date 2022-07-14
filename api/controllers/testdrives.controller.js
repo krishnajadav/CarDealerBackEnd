@@ -12,7 +12,7 @@ exports.getUnavailableSlots = (req, res) => {
             return;
         }
         var timeslots = getUnavailableTimeSlotsFromAppointments(testDrives);
-        res.status(201).send(timeslots);
+        res.status(200).send(timeslots);
     });
 }
 
@@ -23,7 +23,7 @@ exports.getAppointmentsForUser = (req, res) => {
             res.status(500).send({message: err});
             return;
         }
-        res.status(201).send(appointments);
+        res.status(200).send(appointments);
     })
 }
 
@@ -33,7 +33,7 @@ exports.getTimeslots = (req, res) => {
             res.status(500).send({message: err});l
             return;
         }
-        res.status(201).send(testdrivetimes[0].timeslots);
+        res.status(200).send(testdrivetimes[0].timeslots);
     });
 }
 
@@ -47,7 +47,7 @@ exports.getCars = (req, res) => {
         for (let car of testDriveCars) {
             cars.push(car.name);
         }
-        res.status(201).send(cars);
+        res.status(200).send(cars);
     });
 }
 
@@ -90,7 +90,7 @@ exports.cancelAppointment = (req, res) => {
             res.status(500).send({message: err});
             return;
         }
-        res.status(201).send({message:" appointment canceled"});
+        res.status(200).send({message:" appointment canceled"});
     })
 }
 
