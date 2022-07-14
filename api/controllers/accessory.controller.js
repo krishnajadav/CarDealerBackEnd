@@ -1,3 +1,4 @@
+// Author: Tuan Hamid
 const db = require("../models");
 const Accessory = db.accessory;
 
