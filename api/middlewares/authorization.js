@@ -1,5 +1,5 @@
 // Author: Tuan Hamid
-// https://www.bezkoder.com/node-js-mongodb-auth-jwt/
+// verifyToken and checkUserDuplicate referenced from https://www.bezkoder.com/node-js-mongodb-auth-jwt/
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
 const db = require("../models");
