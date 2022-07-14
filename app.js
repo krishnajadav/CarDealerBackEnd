@@ -18,21 +18,24 @@ app.use(cookieParser());
 const db = require("./api/models");
 const dbConfig = require("./api/config/db.config");
 db.mongoose
-    .connect(`mongodb+srv://${dbConfig.username}:${dbConfig.password}@${dbConfig.cluster}.mongodb.net/${dbConfig.dbname}?retryWrites=true&w=majority`, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-    .then(() => {
-        console.log("Successfully connect to MongoDB.");
-    })
-    .catch(err => {
-        console.error("Connection error", err);
-        process.exit();
-    });
-require('./api/routes/user.routes')(app);
-require('./api/routes/testdrives.routes')(app);
-require('./api/routes/inventory.routes')(app);
-require('./api/routes/rental.routes')(app);
-require('./api/routes/accessory.routes')(app);
-
+  .connect(
+    `mongodb+srv://${dbConfig.username}:${dbConfig.password}@${dbConfig.cluster}.mongodb.net/${dbConfig.dbname}?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
+    console.log("Successfully connect to MongoDB.");
+  })
+  .catch((err) => {
+    console.error("Connection error", err);
+    process.exit();
+  });
+require("./api/routes/user.routes")(app);
+require("./api/routes/testdrives.routes")(app);
+require("./api/routes/inventory.routes")(app);
+require("./api/routes/rental.routes")(app);
+require("./api/routes/accessory.routes")(app);
+require("./api/routes/customerService.routes")(app);
 module.exports = app;
