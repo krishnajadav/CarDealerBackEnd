@@ -1,3 +1,4 @@
+// Author: Tuan Hamid
 module.exports = {
     username: "webdev",
     password: "Project9",

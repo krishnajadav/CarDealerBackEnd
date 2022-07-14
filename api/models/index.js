@@ -1,3 +1,4 @@
+// Mongoose promise referenced from https://www.bezkoder.com/node-js-mongodb-auth-jwt/
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 const db = {};
