@@ -11,16 +11,17 @@ exports.form = (req, res) => {
     });
     vehicle.save((err, data) => {
         if (err) {
-            res.status(500).send({message: err});
+            res.status(400).send({message: err});
             return;
         }
-        res.status(201).send({message: 'Your requirements have been submitted'});
+        res.status(201).send({
+          success: true,
+          message: 'Your requirements have been submitted to the dealer',
+          details: req.body
+      });
     });
 };
 
-// exports.getVehicle=(res,res)=>{
-//     res.send("Hello");
-// }
 
 exports.getVehicle = (req, res) => {
     Vehicle.find().exec((err, vehicle) => {
@@ -28,6 +29,11 @@ exports.getVehicle = (req, res) => {
         res.status(500).send({ message: err });
         return;
       }
-      res.status(200).send(vehicle);
+      res.status(200).send({
+        success: true,
+        message: "List retrieved",
+        list: vehicle
+      });
     });
   };
+  
