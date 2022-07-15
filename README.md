@@ -1,92 +1,586 @@
-# 5709_CarDealerBackEnd_Group9
+<!--- The following README.md sample file was adapted from https://gist.github.com/PurpleBooth/109311bb0361f32d87a2#file-readme-template-md by Gabriella Mosquera for academic use ---> 
+<!--- You may delete any comments in this sample README.md file. If needing to use as a .txt file then simply delete all comments, edit as needed, and save as a README.txt file --->
 
+# Assignment 3
 
+* *Date Created*: 15 JUL 2022
+* *Last Modification Date*: 15 JUL 2022
+* *Lab URL*: <http://example.com/>
+* *Git URL*: https://git.cs.dal.ca/jadav/5709_cardealerbackend_group9/-/tree/main/
 
-## Getting started
+## Authors
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+* [Adarsh Kannan Iyengar] - *(Developer)*
+* [Elizabeth James ] - *(Developer)*
+* [Harsh Hariramani] - *(Developer)*
+* [Krishna Sanjaybhai Jadav ] - *(Developer)*
+* [Tuan Hamid] - *(Developer)*
+* [Leah Isenor ] - *(Developer)*
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Built With
 
-## Add your files
+<!--- Provide a list of the frameworks used to build this application, your list should include the name of the framework used, the url where the framework is available for download and what the framework was used for, see the example below --->
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+* [Express](https://expressjs.com/) - The web framework for NodeJS
+  **
+
+## Sources Used
+
+If in completing your lab / assignment / project you used any interpretation of someone else's code, then provide a list of where the code was implement, how it was implemented, why it was implemented, and how it was modified. See the sections below for more details.
+
+### auth.config.ts
+
+*Lines 3 - 5*
 
 ```
-cd existing_repo
-git remote add origin https://git.cs.dal.ca/jadav/5709_cardealerbackend_group9.git
-git branch -M main
-git push -uf origin main
+module.exports = {
+    secret: "Cloud9"
+};
+
 ```
 
-## Integrate with your tools
+The code above was created by adapting the code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) as shown below:
 
-- [ ] [Set up project integrations](https://git.cs.dal.ca/jadav/5709_cardealerbackend_group9/-/settings/integrations)
+```
+module.exports = {
+  secret: "bezkoder-secret-key"
+};
 
-## Collaborate with your team
+```
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+- <!---How---> The code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) was implemented by using it for jsonwebtoken
+- <!---Why---> [NAME](link)'s Code was used because it is needed for Web token encoding
+- <!---How---> [NAME](link)'s Code was modified by changing the secret
 
-## Test and Deploy
+*Repeat as needed*
 
-Use the built-in continuous integration in GitLab.
+### user.controller.js
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+*Lines 10 - 26*
 
-***
+```
+exports.register = (req, res) => {
+    const user = new User({
+        username: req.body.username,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        role: req.body.role,
+        isEnabled: true,
+        password: bcrypt.hashSync(req.body.password, 8)
+    });
+    user.save((err, user) => {
+        if (err) {
+            res.status(500).send({message: err});
+            return;
+        }
+        res.status(201).send({message: 'User created'});
+    });
+};
 
-# Editing this README
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+The code above was created by adapting the code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) as shown below:
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+```
+exports.signup = (req, res) => {
+  const user = new User({
+    username: req.body.username,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 8)
+  });
+  user.save((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    if (req.body.roles) {
+      Role.find(
+        {
+          name: { $in: req.body.roles }
+        },
+        (err, roles) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+          user.roles = roles.map(role => role._id);
+          user.save(err => {
+            if (err) {
+              res.status(500).send({ message: err });
+              return;
+            }
+            res.send({ message: "User was registered successfully!" });
+          });
+        }
+      );
+    } else {
+      Role.findOne({ name: "user" }, (err, role) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        user.roles = [role._id];
+        user.save(err => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+          res.send({ message: "User was registered successfully!" });
+        });
+      });
+    }
+  });
+};
 
-## Name
-Choose a self-explaining name for your project.
+```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+- <!---How---> The code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) was implemented by using it for user registration
+- <!---Why---> [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)'s Code was used because it shows an efficient way to create a registration
+- <!---How---> [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)'s Code was modified by removing the unneccesary roles and replacing with a role variable and isEnabled variable for employee management
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+*Repeat as needed*
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+### user.controller.js
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+*Lines 29 - 66*
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+```
+exports.login = (req, res) => {
+    User.findOne({
+        username: req.body.username
+    })
+        .exec((err, user) => {
+            if (err) {
+                res.status(500).send({message: err});
+                return;
+            }
+            if (!user) {
+                return res.status(404).send({message: "User not found"});
+            }
+            let isPasswordValid = bcrypt.compareSync(
+                req.body.password,
+                user.password
+            );
+            if (!isPasswordValid) {
+                return res.status(401).send({
+                    message: "Invalid Password!"
+                });
+            }
+            if (user.isEnabled === false) {
+                return res.status(401).send({
+                    message: "Account disabled!"
+                });
+            }
+            let token = jwt.sign({id: user.id}, config.secret, {
+                expiresIn: 86400
+            });
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+            res.status(200).send({
+                id: user._id,
+                username: user.username,
+                role: user.role,
+                accessToken: token
+            });
+        });
+};
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+```
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+The code above was created by adapting the code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) as shown below:
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+```
+exports.signin = (req, res) => {
+  User.findOne({
+    username: req.body.username
+  })
+    .populate("roles", "-__v")
+    .exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      if (!user) {
+        return res.status(404).send({ message: "User Not found." });
+      }
+      var passwordIsValid = bcrypt.compareSync(
+        req.body.password,
+        user.password
+      );
+      if (!passwordIsValid) {
+        return res.status(401).send({
+          accessToken: null,
+          message: "Invalid Password!"
+        });
+      }
+      var token = jwt.sign({ id: user.id }, config.secret, {
+        expiresIn: 86400 // 24 hours
+      });
+      var authorities = [];
+      for (let i = 0; i < user.roles.length; i++) {
+        authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+      }
+      res.status(200).send({
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        roles: authorities,
+        accessToken: token
+      });
+    });
+};
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+```
 
-## License
-For open source projects, say how it is licensed.
+- <!---How---> The code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) was implemented by using it for user login
+- <!---Why---> [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)'s Code was used because it shows an efficient way for user login
+- <!---How---> [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)'s Code was modified by adding features for user role and and isEnabled checks
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+*Repeat as needed*
+
+### user.controller.js
+
+
+*Lines 128 - 136*
+*Lines 160 - 171*
+
+```
+    const transporter = nodemailer.createTransport({
+        port: 465,
+        host: "smtp.gmail.com",
+        auth: {
+            user: 'sl.rahmanhamid@gmail.com',
+            pass: 
+        },
+        secure: true,
+    });
+		const mailData = {
+                    from: 'tn220771@dal.ca',
+                    to: user.username,
+                    subject: 'New Password',
+                    text: 'Your new password is ' + newPassword
+                };
+                transporter.sendMail(mailData, function (err, data) {
+                    if(err)
+                        console.log(err)
+                    else
+                        res.status(200).send({message: 'Password reset mail sent'});
+                });
+
+```
+
+The code above was created by adapting the code in [Sudhanshu Sharma](https://medium.com/coox-tech/send-mail-using-node-js-express-js-with-nodemailer-93f4d62c83ee) as shown below:
+
+```
+const transporter = nodemailer.createTransport({
+port: 465,               // true for 465, false for other ports
+host: "smtp.gmail.com",
+   auth: {
+        user: 'youremail@gmail.com',
+        pass: 'password',
+     },
+secure: true,
+});
+const mailData = {
+from: 'youremail@gmail.com',  // sender address
+  to: 'myfriend@gmail.com',   // list of receivers
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+  html: '<b>Hey there! </b>
+         <br> This is our first message sent with Nodemailer<br/>',
+};
+transporter.sendMail(mailOptions, function (err, info) {
+   if(err)
+     console.log(err)
+   else
+     console.log(info);
+});
+
+
+```
+
+- <!---How---> The code in [Sudhanshu Sharma](https://medium.com/coox-tech/send-mail-using-node-js-express-js-with-nodemailer-93f4d62c83ee) was implemented by using it for user password reset
+- <!---Why---> [Sudhanshu Sharma](https://medium.com/coox-tech/send-mail-using-node-js-express-js-with-nodemailer-93f4d62c83ee)'s Code was used because it shows how send free emails using gmail
+- <!---How---> [Sudhanshu Sharma](https://medium.com/coox-tech/send-mail-using-node-js-express-js-with-nodemailer-93f4d62c83ee)'s Code was modified by adding features to reset password and sending the new password
+
+*Repeat as needed*
+
+### user.controller.js
+
+
+*Lines 151*
+
+```
+let newPassword = (Math.random() + 1).toString(36).substring(7);
+
+```
+
+The code above was created by adapting the code in [StackOverflow](https://stackoverflow.com/a/8084248) as shown below:
+
+```
+let r = (Math.random() + 1).toString(36).substring(7);
+console.log("random", r);
+
+```
+
+- <!---How---> The code in [StackOverflow](https://stackoverflow.com/a/8084248) was implemented by using it for user password generation
+- <!---Why---> [StackOverflow](https://stackoverflow.com/a/8084248)'s Code was used because it generates random strings
+- <!---How---> [StackOverflow](https://stackoverflow.com/a/8084248)'s Code was modified by encoding the string and saving it for a users password
+
+*Repeat as needed*
+
+### authorization.js
+
+
+*Lines 8-20*
+
+```
+verifyToken = (req, res, next) => {
+    let token = req.headers["x-access-token"];
+    if (!token) {
+        return res.status(403).send({ message: "No token provided!" });
+    }
+    jwt.verify(token, config.secret, (err, decoded) => {
+        if (err) {
+            return res.status(401).send({ message: "Unauthorized!" });
+        }
+        req.userId = decoded.id;
+        next();
+    });
+};
+
+```
+
+The code above was created by adapting the code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) as shown below:
+
+```
+verifyToken = (req, res, next) => {
+  let token = req.headers["x-access-token"];
+  if (!token) {
+    return res.status(403).send({ message: "No token provided!" });
+  }
+  jwt.verify(token, config.secret, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ message: "Unauthorized!" });
+    }
+    req.userId = decoded.id;
+    next();
+  });
+};
+
+
+```
+
+- <!---How---> The code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) was implemented by using it for user token
+- <!---Why---> [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)'s Code was used because it verifies user tokens
+- <!---How---> [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)'s Code was modified by using it for token checking
+
+*Repeat as needed*
+
+### authorization.js
+
+
+*Lines 22-36*
+
+```
+checkUserDuplicate = (req, res, next) => {
+    User.findOne({
+        username: req.body.username
+    }).exec((err, user) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+        if (user) {
+            res.status(409).send({ message: "User already exists!" });
+            return;
+        }
+        next();
+    });
+};
+
+```
+
+The code above was created by adapting the code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) as shown below:
+
+```
+checkDuplicateUsernameOrEmail = (req, res, next) => {
+  // Username
+  User.findOne({
+    username: req.body.username
+  }).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    if (user) {
+      res.status(400).send({ message: "Failed! Username is already in use!" });
+      return;
+    }
+    // Email
+    User.findOne({
+      email: req.body.email
+    }).exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      if (user) {
+        res.status(400).send({ message: "Failed! Email is already in use!" });
+        return;
+      }
+      next();
+    });
+  });
+};
+
+
+
+```
+
+- <!---How---> The code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) was implemented by using it for checking email duplication
+- <!---Why---> [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)'s Code was used because it verifies duplication in fields
+- <!---How---> [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)'s Code was modified by using it for only user email checking with status code 409
+
+*Repeat as needed*
+
+### user.route.js
+
+
+*Lines 5-20*
+
+```
+module.exports = function(app) {
+    app.use(function(req, res, next) {
+        res.header(
+            "Access-Control-Allow-Headers",
+            "x-access-token, Origin, Content-Type, Accept"
+        );
+        next();
+    });
+    app.post(
+        "/api/user/register", [authorization.checkUserDuplicate] ,controller.register
+    );
+    app.post("/api/user/login", controller.login);
+    app.put("/api/user/updatepassword", controller.updatePassword);
+    app.put("/api/user/updatestatus", controller.updateStatus);
+    app.get("/api/user/employees", controller.findAllEmployees);
+    app.post("/api/user/resetpassword", controller.resetPasswordByEmail);
+
+};
+```
+
+The code above was created by adapting the code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) as shown below:
+
+```
+module.exports = function(app) {
+  app.use(function(req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+  });
+  app.post(
+    "/api/auth/signup",
+    [
+      verifySignUp.checkDuplicateUsernameOrEmail,
+      verifySignUp.checkRolesExisted
+    ],
+    controller.signup
+  );
+  app.post("/api/auth/signin", controller.signin);
+};
+
+
+```
+
+- <!---How---> The code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) was implemented by using it for routing
+- <!---Why---> [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)'s Code was used because it shows routing with middleware usage
+- <!---How---> [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)'s Code was modified by using custom routes and only needed middleware functions
+
+*Repeat as needed*
+
+### models/index.js
+
+
+*Lines 2-6*
+
+```
+const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
+const db = {};
+db.mongoose = mongoose;
+db.user = require("./user.model");
+```
+
+The code above was created by adapting the code in [Bezkoder](https://www.bezkoder.com/node-js-mongodb-auth-jwt/) as shown below:
+
+```
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+const db = {};
+db.mongoose = mongoose;
+db.user = require("./user.model");
+db.role = require("./role.model");
+db.ROLES = ["user", "admin", "moderator"];
+module.exports = db;
+
+
+
+Feature 1: get rental rates for user inputted start and end dates of the rental period, kilometers driven on an average per day and seat count of the vehicles
+Feature 2: get cars available for loan, if the car is under insurance
+Author: Elizabeth James
+
+backend files:
+Model: api/models/rentals/rentalfactor.model.js and api/models/rentals/rentalrate.model.js
+Routes: api/route/rentalroute.js
+controller: api/controller/rental.controller.js
+
+have also included a apis in controller/inventory.controller.js - getFilteredResultsForRent()
+
+frontend files:
+All 7 files under src/pages/quotes
+
+Other sources:
+convert Date to string in YYYY-MM-DD:
+https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
+Author: Darth Egregious
+used at line #75 of rental.controller.js
+
+Circular progress bar:
+https://mui.com/material-ui/react-progress/ - circular 
+used at line #45 of CarMoreDeals.js
+
+*Repeat as needed*
+
+
+
+### File Name
+
+*Lines ## - ##*
+
+```
+Copy and paste your code on lines mentioned 
+
+```
+
+The code above was created by adapting the code in [NAME](link) as shown below:
+
+```
+Copy and paste the snippet of code you are referencing
+
+```
+
+- <!---How---> The code in [NAME](link) was implemented by...
+- <!---Why---> [NAME](link)'s Code was used because...
+- <!---How---> [NAME](link)'s Code was modified by...
+
+*Repeat as needed*
+
+## Acknowledgments
+
+*https://www.npmjs.com/package/bcryptjs
+*https://www.npmjs.com/package/mongoose
+*https://www.npmjs.com/package/nodemailer
+*https://mail.google.com/mail/
