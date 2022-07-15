@@ -15,4 +15,14 @@ module.exports = function(app) {
     
     app.get("/api/getVehicle", controller.getVehicle);
 
+    app.put(
+        "/api/updateRequirements/:id",
+        controller.updateRequirements
+      );
+
+      app.delete(
+        "/api/deleteRequirements/:id",
+        controller.deleteRequirements
+      );
+
 };

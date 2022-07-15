@@ -13,10 +13,12 @@ module.exports = function (app) {
     customerController.createBooking
   );
   app.get("/api/customerService/viewBooking", customerController.viewBooking);
+  
   app.put(
     "/api/customerService/updateBooking/:id",
     customerController.updateBooking
   );
+
   app.delete(
     "/api/customerService/deleteBooking/:id",
     customerController.deleteBooking
