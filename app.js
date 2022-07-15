@@ -6,7 +6,7 @@ const logger = require("morgan");
 const app = express();
 
 const corsOptions = {
-  origin: "*",
+    origin: "*",
 };
 app.use(cors(corsOptions));
 
@@ -29,11 +29,13 @@ db.mongoose
         console.log("DB Connection error", err);
     });
 
+require("./api/routes/vehicle.routes")(app);
 require('./api/routes/user.routes')(app);
 require('./api/routes/testdrives.routes')(app);
 require('./api/routes/inventory.routes')(app);
 require('./api/routes/rental.routes')(app);
 require('./api/routes/accessory.routes')(app);
 require("./api/routes/customerService.routes")(app);
+
 
 module.exports = app;
