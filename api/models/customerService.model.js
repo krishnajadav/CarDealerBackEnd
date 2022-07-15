@@ -1,3 +1,7 @@
+/*
+Author: Adarsh Kannan Iyengar
+Model for Customer Service Booking feature
+*/
 const mongoose = require("mongoose");
 const CustomerServiceSchema = new mongoose.Schema({
   carModel: {
