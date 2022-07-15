@@ -1,6 +1,8 @@
 const db = require("../models");
 const Inventory = db.inventory;
-
+/*
+Author: Krishna Sanjaybhai Jadav(krishna.jadav@dal.ca)
+*/
 exports.add = (req, res) => {
     const inventory = new Inventory({
         vehicleName: req.body.vehicleName,

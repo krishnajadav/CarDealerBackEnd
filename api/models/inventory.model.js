@@ -1,3 +1,6 @@
+/*
+Author: Krishna Sanjaybhai Jadav(krishna.jadav@dal.ca)
+*/
 const mongoose = require("mongoose");
 const Inventory = mongoose.model(
     "Inventory",

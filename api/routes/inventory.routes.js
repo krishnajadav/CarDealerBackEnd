@@ -1,5 +1,7 @@
 const controller = require("../controllers/inventory.controller");
-
+/*
+Author: Krishna Sanjaybhai Jadav(krishna.jadav@dal.ca)
+*/
 module.exports = function(app) {
     app.use(function(req, res, next) {
         res.header(
