@@ -25,8 +25,6 @@
 
 <!--- Provide a list of the frameworks used to build this application, your list should include the name of the framework used, the url where the framework is available for download and what the framework was used for, see the example below --->
 
-* [React](https://reactjs.org/) - The web framework used for frontend
-* [MUI](https://mui.com/material-ui/getting-started/overview/) - UI Component Library
 * [Express](https://expressjs.com/) - The web framework for NodeJS
   **
 
@@ -558,17 +556,7 @@ Copy and paste the snippet of code you are referencing
 
 ## Acknowledgments
 
-*https://mui.com/material-ui/react-breadcrumbs/
-*https://mui.com/material-ui/react-text-field/
-*https://mui.com/material-ui/react-stack/
-*https://mui.com/material-ui/react-grid/
-*https://mui.com/material-ui/react-divider/
-*https://mui.com/material-ui/material-icons/
-*https://mui.com/material-ui/react-button/
-*https://mui.com/material-ui/react-typography/
 *https://www.npmjs.com/package/bcryptjs
 *https://www.npmjs.com/package/mongoose
 *https://www.npmjs.com/package/nodemailer
 *https://mail.google.com/mail/
-*https://www.npmjs.com/package/react-toastify
-*https://www.npmjs.com/package/axios
