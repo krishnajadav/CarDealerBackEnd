@@ -530,7 +530,35 @@ db.role = require("./role.model");
 db.ROLES = ["user", "admin", "moderator"];
 module.exports = db;
 
+
+
+Feature 1: get rental rates for user inputted start and end dates of the rental period, kilometers driven on an average per day and seat count of the vehicles
+Feature 2: get cars available for loan, if the car is under insurance
+Author: Elizabeth James
+
+backend files:
+Model: api/models/rentals/rentalfactor.model.js and api/models/rentals/rentalrate.model.js
+Routes: api/route/rentalroute.js
+controller: api/controller/rental.controller.js
+
+have also included a apis in controller/inventory.controller.js - getFilteredResultsForRent()
+
+frontend files:
+All 7 files under src/pages/quotes
+
+Other sources:
+convert Date to string in YYYY-MM-DD:
+https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
+Author: Darth Egregious
+used at line #75 of rental.controller.js
+
+Circular progress bar:
+https://mui.com/material-ui/react-progress/ - circular 
+used at line #45 of CarMoreDeals.js
+
 *Repeat as needed*
+
+
 
 ### File Name
 
