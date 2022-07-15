@@ -1,3 +1,5 @@
+// Author: Harsh Hariramani
+
 const db = require("../models");
 const Vehicle = db.vehicle;
 
@@ -12,7 +14,7 @@ exports.form = (req, res) => {
             res.status(500).send({message: err});
             return;
         }
-        res.status(201).send({message: 'Requirements have been added'});
+        res.status(201).send({message: 'Your requirements have been submitted'});
     });
 };
 

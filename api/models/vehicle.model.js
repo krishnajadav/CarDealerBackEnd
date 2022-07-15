@@ -1,3 +1,5 @@
+// Author: Harsh Hariramani
+
 const mongoose = require("mongoose");
 
 const Vehicle = mongoose.model(
