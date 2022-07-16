@@ -555,10 +555,14 @@ used at line #75 of rental.controller.js
 Circular progress bar:
 https://mui.com/material-ui/react-progress/ - circular 
 used at line #45 of CarMoreDeals.js
+```
 
+### controllers/vehicles.controller.js
+
+The code for vehicles controller was referenced from: https://www.freecodecamp.org/news/build-a-restful-api-using-node-express-and-mongodb/ and modified according to the requirements.
+
+-----------------------
 *Repeat as needed*
-
-
 
 ### File Name
 
