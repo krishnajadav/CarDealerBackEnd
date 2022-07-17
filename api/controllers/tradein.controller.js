@@ -1,5 +1,6 @@
 //Author: Leah Isenor
 //Controller for the trade in feature
+const { model } = require("mongoose");
 const db = require("../models");
 const TradeInCars = db.tradeInCars;
 
@@ -9,7 +10,8 @@ exports.getOptions = (req, res) => {
             res.status(500).send({message: err});
             return;
         }
-        res.status(200).send(tradeInCars);
+        var formattedTradeInCars = format(tradeInCars);
+        res.status(200).send(formattedTradeInCars);
     });
 }
 
@@ -23,7 +25,6 @@ exports.getEstimate = (req, res) => {
             return;
         }
         var estimate = caculateEstimate(tradeInCar.price,year,km);
-        console.log(tradeInCar.price);
         res.status(200).send({estimate : estimate});
     });
 }
@@ -39,4 +40,21 @@ const caculateEstimate = (price,year,km) => {
         value = value - standard - extra;
     }
     return value.toFixed(2);
+}
+
+const format = (cars) => {
+    const makes = {};
+    for (let car of cars) {
+        if (!makes[car.make]){
+            makes[car.make] = {};
+        }
+        var model = {
+            model : car.model,
+            id : car["_d"]
+        }
+        makes[car.make][car.model] = {
+            id : car["_id"]
+        };
+    }
+    return makes;
 }
