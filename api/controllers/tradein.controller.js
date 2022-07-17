@@ -17,8 +17,8 @@ exports.getOptions = (req, res) => {
 
 exports.getEstimate = (req, res) => {
     var id = req.params.vehicleid;
-    var year = req.body.year;
-    var km = req.body.km;
+    var year = req.query.year;
+    var km = req.query.km;
     TradeInCars.findById(id).exec((err, tradeInCar) => {
         if (err) {
             res.status(500).send({message: err});
@@ -35,8 +35,8 @@ const caculateEstimate = (price,year,km) => {
     var kmyear = km/age;
     var standardkm = 20000;
     for (i = 0; i < age; i++) {
-        var standard = 0.1 * value;
-        var extra = 0.05 * (kmyear - standardkm);
+        var standard = 0.2 * value;
+        var extra = 0.01 * value * (kmyear - standardkm)/10000;
         value = value - standard - extra;
     }
     return value.toFixed(2);
@@ -47,10 +47,6 @@ const format = (cars) => {
     for (let car of cars) {
         if (!makes[car.make]){
             makes[car.make] = {};
-        }
-        var model = {
-            model : car.model,
-            id : car["_d"]
         }
         makes[car.make][car.model] = {
             id : car["_id"]
