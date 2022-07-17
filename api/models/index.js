@@ -13,4 +13,5 @@ db.rentalrate = require("./rentals/rentalrate.model");
 db.rentalfactor = require("./rentals/rentalfactor.model");
 db.customerService = require("./customerService.model");
 db.vehicle = require("./vehicle.model");
+db.tradeInCars = require("./tradeincars.model");
 module.exports = db;
