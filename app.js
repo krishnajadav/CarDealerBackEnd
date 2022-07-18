@@ -36,6 +36,7 @@ require('./api/routes/inventory.routes')(app);
 require('./api/routes/rental.routes')(app);
 require('./api/routes/accessory.routes')(app);
 require("./api/routes/customerService.routes")(app);
+require("./api/routes/tradein.routes")(app);
 
 
 module.exports = app;
