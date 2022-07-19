@@ -3,13 +3,14 @@ const path = require("path");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const helmet = require("helmet");
 const app = express();
 
 const corsOptions = {
   origin: "*",
 };
 app.use(cors(corsOptions));
-
+app.use(helmet());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
