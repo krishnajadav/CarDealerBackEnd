@@ -7,7 +7,9 @@ exports.form = (req, res) => {
     const vehicle = new Vehicle({
         brand: req.body.brand,
         model: req.body.model,
-        dealer: req.body.dealer
+        dealer: req.body.dealer,
+        customer: req.body.customer,
+        email: req.body.email
     });
     vehicle.save((err, data) => {
         if (err) {

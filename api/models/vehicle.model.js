@@ -16,6 +16,14 @@ const Vehicle = mongoose.model(
         dealer: {
             required: true,
             type: String
+        },
+        customer: {
+            required: true,
+            type: String
+        },
+        email: {
+            required: true,
+            type: String
         }
     })
 );
