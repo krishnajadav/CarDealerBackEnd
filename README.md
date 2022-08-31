@@ -3,16 +3,12 @@
 
 # Assignment 3
 
-**[Optional]** If what is being submitted is an individual Lab or Assignment. Otherwise, include a brief one paragraph description about the project.
-
-* *Date Created*: 15 JUL 2022
-* *Last Modification Date*: 15 JUL 2022
-* *Lab URL*: <http://example.com/>
-* *Git URL*: https://git.cs.dal.ca/jadav/5709_cardealerbackend_group9/-/tree/main/
+- Date Created: 15 JUL 2022
+- Last Modification Date: 15 JUL 2022
+- _Frontend Git URL_: <https://github.com/krishnajadav/CarDealerFrontEnd>
+- _Backend Git URL_: <https://github.com/krishnajadav/CarDealerBackEnd>
 
 ## Authors
-
-**[Optional]** If what is being submitted is an individual Lab or Assignment, you may simply include your name and email address. Otherwise list the members of your group.
 
 * [Adarsh Kannan Iyengar] - *(Developer)*
 * [Elizabeth James ] - *(Developer)*
@@ -23,14 +19,10 @@
 
 ## Built With
 
-<!--- Provide a list of the frameworks used to build this application, your list should include the name of the framework used, the url where the framework is available for download and what the framework was used for, see the example below --->
-
 * [Express](https://expressjs.com/) - The web framework for NodeJS
   **
 
 ## Sources Used
-
-If in completing your lab / assignment / project you used any interpretation of someone else's code, then provide a list of where the code was implement, how it was implemented, why it was implemented, and how it was modified. See the sections below for more details.
 
 ### auth.config.ts
 
